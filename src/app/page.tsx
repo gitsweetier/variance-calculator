@@ -185,22 +185,13 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 2. Recommended Bankroll */}
+              {/* 2. Recommended Bankroll + Calculator - Side by side on desktop */}
               <div className="grid-12">
-                <div className="col-12">
+                <div className="col-6">
                   <BankrollRecommendations winrate={winrate} stdDev={stdDev} stakes={stakes} />
                 </div>
-              </div>
-
-              {/* 3. Planning Calculators - Bottom */}
-              <div className="grid-12">
-                <div className="col-12">
-                  <div className="block">
-                    <div className="block-title" style={{ marginBottom: '1rem' }}>
-                      Calculators
-                    </div>
-                    <PlanningCalculators winrate={winrate} stdDev={stdDev} stakes={stakes} />
-                  </div>
+                <div className="col-6">
+                  <PlanningCalculators winrate={winrate} stdDev={stdDev} stakes={stakes} />
                 </div>
               </div>
             </div>

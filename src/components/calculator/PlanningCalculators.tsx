@@ -28,13 +28,7 @@ function formatDollars(dollars: number): string {
 }
 
 export function PlanningCalculators({ winrate, stdDev, stakes }: PlanningCalculatorsProps) {
-  return (
-    <div className="grid-12">
-      <div className="col-12">
-        <BankrollCalculator winrate={winrate} stdDev={stdDev} stakes={stakes} />
-      </div>
-    </div>
-  );
+  return <BankrollCalculator winrate={winrate} stdDev={stdDev} stakes={stakes} />;
 }
 
 function BankrollCalculator({ winrate, stdDev, stakes }: { winrate: number; stdDev: number; stakes: number }) {
@@ -68,7 +62,7 @@ function BankrollCalculator({ winrate, stdDev, stakes }: { winrate: number; stdD
   };
 
   return (
-    <div className="block">
+    <div className="block" style={{ height: '100%' }}>
       <div className="block-title" style={{ marginBottom: '1rem' }}>
         Bankroll for Target Risk of Ruin
       </div>
