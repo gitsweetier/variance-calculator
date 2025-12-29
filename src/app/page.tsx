@@ -56,15 +56,6 @@ export default function Home() {
             <Link href="/winner" className="header-nav__link header-nav__link--accent">
               Am I a Winner?
             </Link>
-            <Link href="/advanced" className="header-nav__link header-nav__link--black">
-              Advanced
-            </Link>
-            <Link href="/tournament" className="header-nav__link header-nav__link--black">
-              Tournament
-            </Link>
-            <Link href="/chat" className="header-nav__link header-nav__link--white">
-              Chat
-            </Link>
           </div>
         </header>
 
@@ -242,6 +233,13 @@ export default function Home() {
           Statistical approximations based on the normal distribution. Actual results may vary.
           <br />
           <span className="page-footer__brand">VARIANCE CALCULATOR</span> — Built for poker players
+          <div style={{ marginTop: '1rem', fontSize: '0.65rem', opacity: 0.4 }}>
+            <Link href="/advanced" style={{ color: 'inherit', textDecoration: 'none' }}>Advanced</Link> <span style={{ opacity: 0.6 }}>WIP</span>
+            {' · '}
+            <Link href="/tournament" style={{ color: 'inherit', textDecoration: 'none' }}>Tournament</Link> <span style={{ opacity: 0.6 }}>WIP</span>
+            {' · '}
+            <Link href="/chat" style={{ color: 'inherit', textDecoration: 'none' }}>Chat</Link> <span style={{ opacity: 0.6 }}>WIP</span>
+          </div>
         </footer>
       </div>
     </main>
