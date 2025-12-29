@@ -1,0 +1,61 @@
+{
+  "sessionId": "2025-12-27_10-14-52_89k7fy",
+  "rating": "somewhat",
+  "issues": [
+    "wrong_questions",
+    "missed_context"
+  ],
+  "comment": "When I said I was a recreational winner, you just took my word for it and you assumed five to ten big blinds per hundred. You should not tell me what win rate you're estimating and you don't have all the information yet. So you shouldn't estimate the win rate yet. Next, when I selected that I knew the number of hours I played, that was a misclick and I didn't know how to get... there was no way for me to get back to say number of hands or to say that I don't know. So we need a way to get back.",
+  "timestamp": "2025-12-27T18:16:26.934Z",
+  "conversationSnapshot": {
+    "sessionId": "2025-12-27_10-14-52_89k7fy",
+    "startedAt": "2025-12-27T18:15:34.786Z",
+    "messages": [
+      {
+        "timestamp": "2025-12-27T18:15:34.786Z",
+        "sessionId": "2025-12-27_10-14-52_89k7fy",
+        "role": "user"
+      },
+      {
+        "timestamp": "2025-12-27T18:15:34.786Z",
+        "sessionId": "2025-12-27_10-14-52_89k7fy",
+        "role": "assistant"
+      },
+      {
+        "timestamp": "2025-12-27T18:15:34.786Z",
+        "sessionId": "2025-12-27_10-14-52_89k7fy",
+        "role": "user"
+      },
+      {
+        "timestamp": "2025-12-27T18:15:34.786Z",
+        "sessionId": "2025-12-27_10-14-52_89k7fy",
+        "role": "assistant"
+      },
+      {
+        "timestamp": "2025-12-27T18:15:34.786Z",
+        "sessionId": "2025-12-27_10-14-52_89k7fy",
+        "role": "user"
+      },
+      {
+        "timestamp": "2025-12-27T18:15:34.786Z",
+        "sessionId": "2025-12-27_10-14-52_89k7fy",
+        "role": "assistant"
+      },
+      {
+        "timestamp": "2025-12-27T18:15:34.786Z",
+        "sessionId": "2025-12-27_10-14-52_89k7fy",
+        "role": "user"
+      },
+      {
+        "timestamp": "2025-12-27T18:15:34.786Z",
+        "sessionId": "2025-12-27_10-14-52_89k7fy",
+        "role": "assistant"
+      },
+      {
+        "timestamp": "2025-12-27T18:15:34.786Z",
+        "sessionId": "2025-12-27_10-14-52_89k7fy",
+        "role": "user"
+      }
+    ]
+  }
+}

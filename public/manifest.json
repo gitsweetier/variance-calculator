@@ -1,0 +1,41 @@
+{
+  "name": "Poker Variance Calculator",
+  "short_name": "Variance Calc",
+  "description": "Calculate poker variance with Monte Carlo simulation. Visualize sample paths, confidence intervals, and downswing probabilities.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F0F0F0",
+  "theme_color": "#FF4D00",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Cash Game Calculator",
+      "short_name": "Cash",
+      "description": "Open cash game variance calculator",
+      "url": "/",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Tournament Calculator",
+      "short_name": "Tournament",
+      "description": "Open tournament variance calculator",
+      "url": "/tournament",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}

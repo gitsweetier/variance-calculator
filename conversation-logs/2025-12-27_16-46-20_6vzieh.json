@@ -1,0 +1,51 @@
+{
+  "sessionId": "2025-12-27_16-46-20_6vzieh",
+  "startedAt": "2025-12-27T00:50:17.494Z",
+  "messages": [
+    {
+      "timestamp": "2025-12-27T00:50:17.494Z",
+      "sessionId": "2025-12-27_16-46-20_6vzieh",
+      "role": "user"
+    },
+    {
+      "timestamp": "2025-12-27T00:50:17.494Z",
+      "sessionId": "2025-12-27_16-46-20_6vzieh",
+      "role": "assistant"
+    },
+    {
+      "timestamp": "2025-12-27T00:50:17.494Z",
+      "sessionId": "2025-12-27_16-46-20_6vzieh",
+      "role": "user"
+    },
+    {
+      "timestamp": "2025-12-27T00:50:17.494Z",
+      "sessionId": "2025-12-27_16-46-20_6vzieh",
+      "role": "assistant"
+    },
+    {
+      "timestamp": "2025-12-27T00:50:17.494Z",
+      "sessionId": "2025-12-27_16-46-20_6vzieh",
+      "role": "user"
+    },
+    {
+      "timestamp": "2025-12-27T00:50:17.494Z",
+      "sessionId": "2025-12-27_16-46-20_6vzieh",
+      "role": "assistant"
+    },
+    {
+      "timestamp": "2025-12-27T00:50:17.494Z",
+      "sessionId": "2025-12-27_16-46-20_6vzieh",
+      "role": "user"
+    },
+    {
+      "timestamp": "2025-12-27T00:50:17.494Z",
+      "sessionId": "2025-12-27_16-46-20_6vzieh",
+      "role": "assistant"
+    },
+    {
+      "timestamp": "2025-12-27T00:50:17.494Z",
+      "sessionId": "2025-12-27_16-46-20_6vzieh",
+      "role": "user"
+    }
+  ]
+}

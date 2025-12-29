@@ -1,0 +1,41 @@
+{
+  "sessionId": "2025-12-26_15-53-15_e4v5om",
+  "startedAt": "2025-12-26T23:55:48.654Z",
+  "messages": [
+    {
+      "timestamp": "2025-12-26T23:55:48.654Z",
+      "sessionId": "2025-12-26_15-53-15_e4v5om",
+      "role": "user"
+    },
+    {
+      "timestamp": "2025-12-26T23:55:48.654Z",
+      "sessionId": "2025-12-26_15-53-15_e4v5om",
+      "role": "assistant"
+    },
+    {
+      "timestamp": "2025-12-26T23:55:48.654Z",
+      "sessionId": "2025-12-26_15-53-15_e4v5om",
+      "role": "user"
+    },
+    {
+      "timestamp": "2025-12-26T23:55:48.654Z",
+      "sessionId": "2025-12-26_15-53-15_e4v5om",
+      "role": "assistant"
+    },
+    {
+      "timestamp": "2025-12-26T23:55:48.654Z",
+      "sessionId": "2025-12-26_15-53-15_e4v5om",
+      "role": "user"
+    },
+    {
+      "timestamp": "2025-12-26T23:55:48.654Z",
+      "sessionId": "2025-12-26_15-53-15_e4v5om",
+      "role": "assistant"
+    },
+    {
+      "timestamp": "2025-12-26T23:55:48.654Z",
+      "sessionId": "2025-12-26_15-53-15_e4v5om",
+      "role": "user"
+    }
+  ]
+}

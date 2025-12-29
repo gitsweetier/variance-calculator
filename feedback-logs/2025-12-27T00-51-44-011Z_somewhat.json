@@ -1,0 +1,60 @@
+{
+  "sessionId": "2025-12-27_16-46-20_6vzieh",
+  "rating": "somewhat",
+  "issues": [
+    "wrong_math"
+  ],
+  "comment": "I think the challenge was, it seems like you assumed six big blinds per hundred at 10/20, but I'm deciding to move up to 10/20. I'm not there yet, so I told you my win rate at lower stakes. Or at least that's what I meant. I wasn't clear maybe the way you were asking, but also the recommended bankroll is really low. We have to be a lot more careful. I think you should be a lot more careful with the feedback you give out and the advice you give because people can go broke based on this.",
+  "timestamp": "2025-12-27T00:51:43.870Z",
+  "conversationSnapshot": {
+    "sessionId": "2025-12-27_16-46-20_6vzieh",
+    "startedAt": "2025-12-27T00:50:17.494Z",
+    "messages": [
+      {
+        "timestamp": "2025-12-27T00:50:17.494Z",
+        "sessionId": "2025-12-27_16-46-20_6vzieh",
+        "role": "user"
+      },
+      {
+        "timestamp": "2025-12-27T00:50:17.494Z",
+        "sessionId": "2025-12-27_16-46-20_6vzieh",
+        "role": "assistant"
+      },
+      {
+        "timestamp": "2025-12-27T00:50:17.494Z",
+        "sessionId": "2025-12-27_16-46-20_6vzieh",
+        "role": "user"
+      },
+      {
+        "timestamp": "2025-12-27T00:50:17.494Z",
+        "sessionId": "2025-12-27_16-46-20_6vzieh",
+        "role": "assistant"
+      },
+      {
+        "timestamp": "2025-12-27T00:50:17.494Z",
+        "sessionId": "2025-12-27_16-46-20_6vzieh",
+        "role": "user"
+      },
+      {
+        "timestamp": "2025-12-27T00:50:17.494Z",
+        "sessionId": "2025-12-27_16-46-20_6vzieh",
+        "role": "assistant"
+      },
+      {
+        "timestamp": "2025-12-27T00:50:17.494Z",
+        "sessionId": "2025-12-27_16-46-20_6vzieh",
+        "role": "user"
+      },
+      {
+        "timestamp": "2025-12-27T00:50:17.494Z",
+        "sessionId": "2025-12-27_16-46-20_6vzieh",
+        "role": "assistant"
+      },
+      {
+        "timestamp": "2025-12-27T00:50:17.494Z",
+        "sessionId": "2025-12-27_16-46-20_6vzieh",
+        "role": "user"
+      }
+    ]
+  }
+}

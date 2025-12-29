@@ -1,0 +1,21 @@
+{
+  "sessionId": "2025-12-27_16-07-57_0biyxj",
+  "startedAt": "2025-12-27T00:09:05.476Z",
+  "messages": [
+    {
+      "timestamp": "2025-12-27T00:09:05.476Z",
+      "sessionId": "2025-12-27_16-07-57_0biyxj",
+      "role": "user"
+    },
+    {
+      "timestamp": "2025-12-27T00:09:05.476Z",
+      "sessionId": "2025-12-27_16-07-57_0biyxj",
+      "role": "assistant"
+    },
+    {
+      "timestamp": "2025-12-27T00:09:05.476Z",
+      "sessionId": "2025-12-27_16-07-57_0biyxj",
+      "role": "user"
+    }
+  ]
+}
