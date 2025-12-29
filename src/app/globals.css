@@ -291,8 +291,24 @@ body {
   }
 }
 
-/* Desktop - show full labels */
-@media (min-width: 769px) {
+/* Medium screens (769px - 1100px) - short labels, tighter spacing, single row */
+@media (min-width: 769px) and (max-width: 1100px) {
+  .tab .tab__label-full {
+    display: none !important;
+  }
+
+  .tab .tab__label-short {
+    display: inline !important;
+  }
+
+  .tab {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* Wide desktop (>1100px) - full labels */
+@media (min-width: 1101px) {
   .tab .tab__label-full {
     display: inline !important;
   }
