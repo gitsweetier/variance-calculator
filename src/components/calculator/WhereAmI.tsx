@@ -84,7 +84,7 @@ export function WhereAmI({ stdDev, stakes }: WhereAmIProps) {
 
   return (
     <div className="grid-12" style={{ gap: '0.75rem' }}>
-      {/* Row 1: Inputs */}
+      {/* Row 1: Inputs + Banner */}
       <div className="col-4">
         <div className="block" style={{ padding: '0.75rem', height: '100%' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '0.75rem' }}>
@@ -246,9 +246,25 @@ export function WhereAmI({ stdDev, stakes }: WhereAmIProps) {
         </div>
       </div>
 
-      {/* Credible Intervals */}
-      <div className="col-8">
-        <div className="block" style={{ padding: '0.75rem', height: '100%' }}>
+      {/* Banner: Am I a Winner? | Reading This Page */}
+      <div className="col-8 winner-banner" style={{ gridTemplateColumns: '1fr 2fr' }}>
+        {/* Left panel - orange accent */}
+        <div className="winner-banner__panel winner-banner__panel--orange" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="winner-banner__title" style={{ fontSize: '1.1rem', textAlign: 'center' }}>
+            Am I Actually A Winner?
+          </div>
+        </div>
+        {/* Right panel - black with explanation */}
+        <div className="winner-banner__panel winner-banner__panel--black">
+          <div className="winner-banner__instructions" style={{ fontSize: '0.85rem', lineHeight: 1.6 }}>
+            Enter your results on the left. The credible intervals below show where your true winrate likely falls. The orange line marks your observed winrate. If an interval crosses zero (gray line), you can&apos;t be confident you&apos;re a winner at that confidence level.
+          </div>
+        </div>
+      </div>
+
+      {/* Row 2: Credible Intervals - Full Width */}
+      <div className="col-12">
+        <div className="block" style={{ padding: '0.75rem' }}>
           <div className="block-title" style={{ marginBottom: '0.5rem' }}>
             Credible Intervals for True Winrate
           </div>
@@ -300,7 +316,7 @@ export function WhereAmI({ stdDev, stakes }: WhereAmIProps) {
                         style={{
                           position: 'absolute',
                           left: '44px',
-                          right: '70px',
+                          right: '100px',
                           top: '50%',
                           transform: 'translateY(-50%)',
                           height: '14px',
@@ -354,13 +370,13 @@ export function WhereAmI({ stdDev, stakes }: WhereAmIProps) {
                           top: '50%',
                           transform: 'translateY(-50%)',
                           fontFamily: 'var(--font-mono)',
-                          fontSize: '0.6rem',
-                          width: '66px',
+                          fontSize: '0.7rem',
+                          width: '90px',
                           textAlign: 'right',
                           color: includesZero ? '#666' : r.lower > 0 ? '#16a34a' : '#dc2626',
                         }}
                       >
-                        {r.lower.toFixed(1)}–{r.upper.toFixed(1)}
+                        {r.lower.toFixed(1)} to {r.upper.toFixed(1)}
                       </div>
                     </div>
                   );
@@ -371,36 +387,6 @@ export function WhereAmI({ stdDev, stakes }: WhereAmIProps) {
 
           <div style={{ marginTop: '0.5rem', fontSize: '0.7rem', opacity: 0.65 }}>
             Orange line = observed winrate. Gray line = breakeven. Darker = more confident.
-          </div>
-        </div>
-      </div>
-
-      {/* Banner: Am I a Winner? | Reading This Tab */}
-      <div className="col-12 winner-banner">
-        {/* Left panel - orange with Am I a Winner */}
-        <div className="winner-banner__panel winner-banner__panel--orange">
-          <div className="winner-banner__label">
-            The Big Question
-          </div>
-          <div className="winner-banner__title">
-            Am I Actually A Winner?
-          </div>
-          <div className="winner-banner__gauge">
-            <span className="winner-banner__percentage">
-              {formatPercent(probWinner)}
-            </span>
-            <span className="winner-banner__percentage-label">confident</span>
-          </div>
-          <div className="winner-banner__context">{getWinnerContext()}</div>
-        </div>
-        {/* Right panel - black with Reading This Tab */}
-        <div className="winner-banner__panel winner-banner__panel--black">
-          <div className="winner-banner__label winner-banner__label--muted">
-            How To Read This Tab
-          </div>
-          <div className="winner-banner__instructions">
-            <strong>Winner gauge</strong> = confidence your true winrate &gt; 0.<br />
-            <strong>Credible intervals</strong> = range your true winrate likely falls in.
           </div>
         </div>
       </div>

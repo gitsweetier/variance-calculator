@@ -601,6 +601,9 @@ export function DownswingSanityCheck({ assumedWinrate, stdDev, stakes }: Downswi
                 </>
               ) : null}
             </div>
+            <div style={{ marginTop: '0.4rem', fontSize: '0.75rem', opacity: 0.65, lineHeight: 1.4 }}>
+              <strong>Why does probability increase with more hands?</strong> This calculates the chance of experiencing this drawdown <em>at some point</em> during the period, not ending at that result. More hands = more opportunities for variance to create a large drawdown from your peak, even if you're expected to be up overall.
+            </div>
 
             <div className="progress-bar" style={{ marginTop: '0.75rem', height: '10px' }}>
               <div

@@ -1,6 +1,6 @@
 'use client';
 
-import { probabilityOfProfit } from '@/lib/math/statistics';
+import { probabilityOfProfit, normalInverseCDF } from '@/lib/math/statistics';
 
 interface BreakEvenTimelineProps {
   winrate: number;
@@ -22,6 +22,31 @@ function formatPercent(p: number): string {
   return `${(p * 100).toFixed(0)}%`;
 }
 
+/**
+ * Calculate exact number of hands needed to reach a target probability of profit
+ *
+ * For P(profit) = target, we need:
+ * Φ(winrate * sqrt(hands/100) / stdDev) = target
+ *
+ * Solving: hands = 100 * (z * stdDev / winrate)^2
+ * where z = normalInverseCDF(target)
+ */
+function handsForProfitProbability(winrate: number, stdDev: number, targetProb: number): number | null {
+  if (winrate <= 0) return null;
+
+  const z = normalInverseCDF(targetProb);
+  const hands = 100 * Math.pow((z * stdDev) / winrate, 2);
+
+  return Math.ceil(hands);
+}
+
+function formatExactHands(hands: number | null): string {
+  if (hands === null) return 'N/A';
+  if (hands >= 1000000) return `${(hands / 1000000).toFixed(1)}M`;
+  if (hands >= 1000) return `${(hands / 1000).toFixed(0)}k`;
+  return hands.toLocaleString();
+}
+
 export function BreakEvenTimeline({ winrate, stdDev }: BreakEvenTimelineProps) {
   const milestoneData = MILESTONES.map((hands) => {
     const probProfit = probabilityOfProfit(hands, winrate, stdDev);
@@ -32,16 +57,16 @@ export function BreakEvenTimeline({ winrate, stdDev }: BreakEvenTimelineProps) {
     };
   });
 
-  // Find the first milestone where probability crosses 90%, 95%, 99%
-  const find90 = milestoneData.find((m) => m.probProfit >= 0.90);
-  const find95 = milestoneData.find((m) => m.probProfit >= 0.95);
-  const find99 = milestoneData.find((m) => m.probProfit >= 0.99);
+  // Calculate exact hands for 90%, 95%, 99% confidence
+  const exact90 = handsForProfitProbability(winrate, stdDev, 0.90);
+  const exact95 = handsForProfitProbability(winrate, stdDev, 0.95);
+  const exact99 = handsForProfitProbability(winrate, stdDev, 0.99);
 
   if (winrate <= 0) {
     return (
       <div className="block">
         <div className="block-title" style={{ marginBottom: '1rem' }}>
-          Break-Even Timeline
+          Chance of Profit vs. Time
         </div>
         <div style={{
           padding: '1rem',
@@ -58,7 +83,7 @@ export function BreakEvenTimeline({ winrate, stdDev }: BreakEvenTimelineProps) {
   return (
     <div className="block">
       <div className="block-title" style={{ marginBottom: '1rem' }}>
-        Break-Even Timeline
+        Chance of Profit vs. Time
       </div>
 
       {/* Summary callouts */}
@@ -68,7 +93,7 @@ export function BreakEvenTimeline({ winrate, stdDev }: BreakEvenTimelineProps) {
             90% confident
           </div>
           <div style={{ fontSize: '1.25rem', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
-            {find90 ? find90.label : '>1M'} hands
+            {formatExactHands(exact90)} hands
           </div>
         </div>
         <div style={{ textAlign: 'center' }}>
@@ -76,7 +101,7 @@ export function BreakEvenTimeline({ winrate, stdDev }: BreakEvenTimelineProps) {
             95% confident
           </div>
           <div style={{ fontSize: '1.25rem', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
-            {find95 ? find95.label : '>1M'} hands
+            {formatExactHands(exact95)} hands
           </div>
         </div>
         <div style={{ textAlign: 'center' }}>
@@ -84,7 +109,7 @@ export function BreakEvenTimeline({ winrate, stdDev }: BreakEvenTimelineProps) {
             99% confident
           </div>
           <div style={{ fontSize: '1.25rem', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
-            {find99 ? find99.label : '>1M'} hands
+            {formatExactHands(exact99)} hands
           </div>
         </div>
       </div>

@@ -4,10 +4,8 @@ import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { SliderControls } from '@/components/calculator/SliderControls';
 import { MonteCarloSVG } from '@/components/calculator/MonteCarloSVG';
-import { DownswingTable } from '@/components/calculator/DownswingTable';
 import { BreakEvenTimeline } from '@/components/calculator/BreakEvenTimeline';
 import { BankrollRecommendations } from '@/components/calculator/BankrollRecommendations';
-import { PlanningCalculators } from '@/components/calculator/PlanningCalculators';
 import { CoreOutcomesCard } from '@/components/calculator/MetricsGrid';
 import { DownswingSanityCheck } from '@/components/calculator/DownswingSanityCheck';
 import { BackingCalculator } from '@/components/v2/BackingCalculator';
@@ -63,7 +61,7 @@ export default function Home() {
             SECTION 1: YOUR PARAMETERS (always visible)
             ===================================================================== */}
         <section style={{ marginBottom: 'var(--gap)' }}>
-          <div className="section-header">Section 1: Your Parameters</div>
+          <div className="section-header">Your Parameters</div>
           <div className="section-content">
             <SliderControls
               winrate={winrate}
@@ -85,20 +83,6 @@ export default function Home() {
             ===================================================================== */}
         <section style={{ marginBottom: 'var(--gap)' }}>
           <div className="tabs">
-            {/* Mobile dropdown select */}
-            <select
-              className="tabs__mobile-select"
-              value={activeTab}
-              onChange={(e) => setActiveTab(e.target.value as TabId)}
-              aria-label="Select tab"
-            >
-              {tabs.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.label}
-                </option>
-              ))}
-            </select>
-
             {/* Tab buttons (horizontal on desktop, vertical on mobile) */}
             <div className="tabs__list" role="tablist" aria-label="Variance calculator tabs">
               {tabs.map((t) => {
@@ -175,23 +159,17 @@ export default function Home() {
               hidden={activeTab !== 'bankroll'}
               className="tab-panel"
             >
-              {/* 1. Risk of Net Loss + What If You're Wrong - Side by side */}
+              {/* Row 1: Bankroll Requirements - Full width */}
               <div className="grid-12">
-                <div className="col-5">
-                  <DownswingTable winrate={winrate} stdDev={stdDev} stakes={stakes} />
-                </div>
-                <div className="col-7">
-                  <WinrateSensitivityCards winrate={winrate} stdDev={stdDev} bankroll={bankroll} />
+                <div className="col-12">
+                  <BankrollRecommendations winrate={winrate} stdDev={stdDev} stakes={stakes} />
                 </div>
               </div>
 
-              {/* 2. Recommended Bankroll + Calculator - Side by side on desktop */}
+              {/* Row 2: What If You're Wrong - Full width */}
               <div className="grid-12">
-                <div className="col-6">
-                  <BankrollRecommendations winrate={winrate} stdDev={stdDev} stakes={stakes} />
-                </div>
-                <div className="col-6">
-                  <PlanningCalculators winrate={winrate} stdDev={stdDev} stakes={stakes} />
+                <div className="col-12">
+                  <WinrateSensitivityCards winrate={winrate} stdDev={stdDev} bankroll={bankroll} />
                 </div>
               </div>
             </div>

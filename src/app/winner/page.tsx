@@ -20,10 +20,7 @@ export default function WinnerPage() {
           </div>
           <div className="header-nav">
             <Link href="/" className="header-nav__link header-nav__link--black">
-              Calculator
-            </Link>
-            <Link href="/advanced" className="header-nav__link header-nav__link--black">
-              Advanced
+              Variance Calculator
             </Link>
           </div>
         </header>

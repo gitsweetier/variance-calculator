@@ -12,7 +12,7 @@ interface ScenarioData {
   winrate: number;
   bustRisk: number;
   safeBankrollBI: number | null;
-  severity: 'warning' | 'danger' | 'critical';
+  label: string;
 }
 
 function formatPercent(p: number): string {
@@ -35,6 +35,18 @@ export function WinrateSensitivityCards({ winrate, stdDev, bankroll }: WinrateSe
   // Build scenarios based on current winrate
   const scenarios: ScenarioData[] = [];
 
+  // Current winrate (your assumption)
+  const currentBustRisk = winrate > 0 ? downswingProbability(bankrollBB, winrate, stdDev) : 1.0;
+  const currentSafeBR = winrate > 0 ? minimumBankroll(winrate, stdDev, 0.05) : null;
+  const currentSafeBRBI = currentSafeBR !== null ? Math.ceil(currentSafeBR / 100) : null;
+
+  scenarios.push({
+    winrate,
+    bustRisk: currentBustRisk,
+    safeBankrollBI: currentSafeBRBI,
+    label: 'Your Assumption',
+  });
+
   // Scenario 1: ~2/3 of winrate (rounded to nearest 0.5)
   const twoThirds = roundToHalf(winrate * (2 / 3));
   if (twoThirds > 0) {
@@ -44,7 +56,7 @@ export function WinrateSensitivityCards({ winrate, stdDev, bankroll }: WinrateSe
       winrate: twoThirds,
       bustRisk,
       safeBankrollBI: safeBR !== null ? Math.ceil(safeBR / 100) : null,
-      severity: 'warning',
+      label: 'Slightly Worse',
     });
   }
 
@@ -57,7 +69,7 @@ export function WinrateSensitivityCards({ winrate, stdDev, bankroll }: WinrateSe
       winrate: oneThird,
       bustRisk,
       safeBankrollBI: safeBR !== null ? Math.ceil(safeBR / 100) : null,
-      severity: 'danger',
+      label: 'Much Worse',
     });
   }
 
@@ -66,13 +78,8 @@ export function WinrateSensitivityCards({ winrate, stdDev, bankroll }: WinrateSe
     winrate: 0,
     bustRisk: 1.0,
     safeBankrollBI: null,
-    severity: 'critical',
+    label: 'Breakeven',
   });
-
-  // Current winrate stats
-  const currentBustRisk = winrate > 0 ? downswingProbability(bankrollBB, winrate, stdDev) : 1.0;
-  const currentSafeBR = winrate > 0 ? minimumBankroll(winrate, stdDev, 0.05) : null;
-  const currentSafeBRBI = currentSafeBR !== null ? Math.ceil(currentSafeBR / 100) : null;
 
   if (winrate <= 0) {
     return (
@@ -92,68 +99,138 @@ export function WinrateSensitivityCards({ winrate, stdDev, bankroll }: WinrateSe
     );
   }
 
-  const getSeverityStyles = (severity: 'warning' | 'danger' | 'critical') => {
-    switch (severity) {
-      case 'warning':
-        return { background: 'rgba(245, 158, 11, 0.15)', borderColor: '#f59e0b' };
-      case 'danger':
-        return { background: 'rgba(249, 115, 22, 0.15)', borderColor: '#f97316' };
-      case 'critical':
-        return { background: 'rgba(220, 38, 38, 0.15)', borderColor: '#dc2626' };
-    }
-  };
-
   return (
-    <div className="block">
-      <div className="block-title" style={{ marginBottom: '1rem' }}>
-        What If You&apos;re Wrong?
+    <div>
+      {/* Banner alert - horizontal two-panel */}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          background: 'white',
+          border: '1.5px solid #000',
+          marginBottom: '1rem',
+        }}
+      >
+        {/* Left panel - orange with headline */}
+        <div
+          style={{
+            flex: '0 0 40%',
+            background: '#D94B2B',
+            padding: '1.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}
+        >
+          <div
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.65rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.15em',
+              color: 'rgba(255,255,255,0.9)',
+              marginBottom: '0.5rem',
+            }}
+          >
+            Heads Up
+          </div>
+          <div
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: '1.25rem',
+              fontWeight: 700,
+              color: 'white',
+              lineHeight: 1.3,
+            }}
+          >
+            What If You&apos;re Wrong?
+          </div>
+        </div>
+        {/* Right panel - black with white foreground */}
+        <div
+          style={{
+            flex: 1,
+            background: 'black',
+            padding: '1.5rem',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <div
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: '0.9rem',
+              color: 'white',
+              lineHeight: 1.6,
+            }}
+          >
+            Your bankroll calculations are only as good as your winrate estimate. If you&apos;re wrong about your edge, your risk of ruin changes <strong style={{ fontWeight: 700 }}>dramatically</strong>.
+          </div>
+        </div>
       </div>
 
-      {/* Green box - User's assumption */}
-      <div style={{
-        marginBottom: '0.75rem',
-        padding: '0.75rem 1rem',
-        background: 'rgba(34, 197, 94, 0.15)',
-        border: '2px solid #22c55e',
-        fontSize: '0.875rem',
-      }}>
-        <div style={{ marginBottom: '0.35rem' }}>
-          Your assumption: <strong>{winrate.toFixed(1)} bb/100</strong>
+      <div className="block">
+        <div className="block-title" style={{ marginBottom: '1rem' }}>
+          Alternate Win Rates
         </div>
-        <div style={{ fontSize: '0.8rem' }}>
-          Bust risk ({bankrollBI} BI): <strong>{formatPercent(currentBustRisk)}</strong>
-        </div>
-        <div style={{ fontSize: '0.8rem' }}>
-          Safe* bankroll: {currentSafeBRBI !== null ? `${currentSafeBRBI} BI` : '∞'}
-        </div>
-      </div>
-
-      {/* Scenario cards */}
-      <div className="sensitivity-cards-grid">
+      {/* Scenario cards - horizontal layout */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1px' }}>
         {scenarios.map((scenario, i) => {
-          const styles = getSeverityStyles(scenario.severity);
           const isBreakeven = scenario.winrate === 0;
+          const winrateColors = ['#16a34a', '#ca8a04', '#ea580c', '#dc2626'];
+          const winrateColor = winrateColors[i] || winrateColors[0];
+
           return (
             <div
               key={i}
               style={{
-                padding: '0.75rem 1rem',
-                background: styles.background,
-                border: `2px solid ${styles.borderColor}`,
+                padding: '1rem',
+                background: 'white',
+                border: `1px solid ${winrateColor}`,
               }}
             >
-              <div style={{ marginBottom: '0.35rem', fontSize: '0.875rem' }}>
-                If your edge is{' '}
-                <strong>
-                  {isBreakeven ? '0 bb/100 (breakeven)' : `${scenario.winrate.toFixed(1)} bb/100`}
-                </strong>
-                :
+              {/* Small label */}
+              <div style={{
+                fontSize: '0.6rem',
+                fontWeight: 600,
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+                marginBottom: '0.35rem',
+                color: winrateColor,
+                opacity: 0.8,
+              }}>
+                {scenario.label}
               </div>
-              <div style={{ fontSize: '0.8rem' }}>
-                Bust risk ({bankrollBI} BI): <strong>{formatPercent(scenario.bustRisk)}</strong>
+
+              {/* Large winrate value */}
+              <div style={{
+                fontSize: '1.25rem',
+                fontWeight: 700,
+                fontFamily: 'var(--font-mono)',
+                marginBottom: '0.75rem',
+                letterSpacing: '-0.02em',
+                color: winrateColor,
+              }}>
+                {isBreakeven ? '0' : scenario.winrate.toFixed(1)}
+                <span style={{ fontSize: '0.7rem', fontWeight: 500, opacity: 0.7, marginLeft: '0.25rem' }}>
+                  bb/100
+                </span>
               </div>
-              <div style={{ fontSize: '0.8rem' }}>
-                Safe* bankroll: {scenario.safeBankrollBI !== null ? `${scenario.safeBankrollBI} BI` : '∞'}
+
+              {/* Stats */}
+              <div style={{ fontSize: '0.85rem', lineHeight: 1.8 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                  <span style={{ opacity: 0.5, fontSize: '0.8rem' }}>Bust Risk</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '1.1rem' }}>
+                    {formatPercent(scenario.bustRisk)}
+                  </span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                  <span style={{ opacity: 0.5, fontSize: '0.8rem' }}>Safe Bankroll</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: '1.1rem' }}>
+                    {scenario.safeBankrollBI !== null ? `${scenario.safeBankrollBI} BI` : '∞'}
+                  </span>
+                </div>
               </div>
             </div>
           );
@@ -162,22 +239,13 @@ export function WinrateSensitivityCards({ winrate, stdDev, bankroll }: WinrateSe
 
       {/* Bottom text */}
       <div style={{
-        marginTop: '1rem',
-        fontSize: '0.75rem',
-        opacity: 0.7,
-        lineHeight: 1.5,
-      }}>
-        If you&apos;re wrong about your winrate, your risk changes dramatically. The less confident you are, the more conservative your bankroll should be.
-      </div>
-
-      {/* Footnote */}
-      <div style={{
-        marginTop: '0.5rem',
+        marginTop: '0.75rem',
         fontSize: '0.7rem',
         opacity: 0.5,
-        lineHeight: 1.4,
+        lineHeight: 1.5,
       }}>
-        *Safe means 5% Risk of Ruin (going broke) if you were to never move down in stakes. I suggest moving down much before that.
+        *&quot;Safe&quot; bankroll = 5% risk of ruin.
+      </div>
       </div>
     </div>
   );

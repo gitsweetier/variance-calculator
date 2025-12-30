@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 interface BackingCalculatorProps {
   winrate: number;
@@ -210,6 +210,12 @@ interface HistogramProps {
 function Histogram({ data, title, mean, median }: HistogramProps) {
   const numBins = 50;
 
+  // Track if component has mounted to avoid hydration mismatch
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const { bins, minVal, maxVal, binWidth } = useMemo(() => {
     if (data.length === 0) return { bins: [], minVal: 0, maxVal: 0, binWidth: 0 };
 
@@ -235,9 +241,10 @@ function Histogram({ data, title, mean, median }: HistogramProps) {
 
   const maxCount = Math.max(...bins, 1);
   const range = maxVal - minVal || 1;
-  const zeroX = ((0 - minVal) / range) * 100;
-  const meanX = ((mean - minVal) / range) * 100;
-  const medianX = ((median - minVal) / range) * 100;
+  // Round to 2 decimal places to avoid hydration mismatch from floating-point differences
+  const zeroX = Math.round(((0 - minVal) / range) * 10000) / 100;
+  const meanX = Math.round(((mean - minVal) / range) * 10000) / 100;
+  const medianX = Math.round(((median - minVal) / range) * 10000) / 100;
 
   return (
     <div className="block" style={{ padding: '1rem' }}>
@@ -304,8 +311,8 @@ function Histogram({ data, title, mean, median }: HistogramProps) {
           })}
         </div>
 
-        {/* Zero line */}
-        {zeroX > 0 && zeroX < 100 && (
+        {/* Zero line - only render after mount to avoid hydration mismatch */}
+        {mounted && zeroX > 0 && zeroX < 100 && (
           <div style={{
             position: 'absolute',
             left: `calc(0.5rem + ${zeroX}%)`,
@@ -317,8 +324,8 @@ function Histogram({ data, title, mean, median }: HistogramProps) {
           }} />
         )}
 
-        {/* Mean line */}
-        {meanX >= 0 && meanX <= 100 && (
+        {/* Mean line - only render after mount to avoid hydration mismatch */}
+        {mounted && meanX >= 0 && meanX <= 100 && (
           <div style={{
             position: 'absolute',
             left: `calc(0.5rem + ${meanX}%)`,
@@ -330,8 +337,8 @@ function Histogram({ data, title, mean, median }: HistogramProps) {
           }} />
         )}
 
-        {/* Median line */}
-        {medianX >= 0 && medianX <= 100 && (
+        {/* Median line - only render after mount to avoid hydration mismatch */}
+        {mounted && medianX >= 0 && medianX <= 100 && (
           <div style={{
             position: 'absolute',
             left: `calc(0.5rem + ${medianX}%)`,

@@ -264,6 +264,11 @@ export function runDownswingAnalysis(
  * Drawdown is defined as peak-to-trough decline of cumulative winnings, i.e. max(peak - cumulative).
  *
  * This is computed via Monte Carlo simulation (seeded RNG passed in).
+ *
+ * IMPORTANT: This calculates the probability of experiencing the drawdown *at some point* during
+ * the period, not ending at that result. As such, the probability increases with more hands because
+ * there are more opportunities for variance to create a large drawdown from peak, even for winning
+ * players. This is the correct question for downswing risk assessment.
  */
 export function estimateMaxDrawdownProbability(
   totalHands: number,

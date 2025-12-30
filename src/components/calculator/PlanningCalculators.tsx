@@ -40,6 +40,16 @@ function BankrollCalculator({ winrate, stdDev, stakes }: { winrate: number; stdD
   const buyins = Math.ceil(bankrollBB / 100);
   const dollars = bankrollBB * stakes;
 
+  // Color based on risk level
+  const getRiskColor = (ror: number) => {
+    if (ror <= 2) return { bg: 'rgba(22, 163, 74, 0.1)', border: '#16a34a', text: '#16a34a' };
+    if (ror <= 5) return { bg: 'rgba(59, 130, 246, 0.1)', border: '#3b82f6', text: '#3b82f6' };
+    if (ror <= 10) return { bg: 'rgba(245, 158, 11, 0.1)', border: '#f59e0b', text: '#f59e0b' };
+    return { bg: 'rgba(220, 38, 38, 0.1)', border: '#dc2626', text: '#dc2626' };
+  };
+
+  const riskColors = getRiskColor(targetRoR);
+
   const handleFocus = () => {
     setIsEditing(true);
     setRorText(String(targetRoR));
@@ -66,46 +76,72 @@ function BankrollCalculator({ winrate, stdDev, stakes }: { winrate: number; stdD
       <div className="block-title" style={{ marginBottom: '1rem' }}>
         Bankroll for Target Risk of Ruin
       </div>
-      <div style={{ marginBottom: '1rem' }}>
-        <label
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', alignItems: 'start' }}>
+        {/* Left: Input */}
+        <div>
+          <label
+            style={{
+              display: 'block',
+              fontSize: '0.625rem',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              marginBottom: '0.5rem',
+            }}
+          >
+            Target Risk of Ruin
+          </label>
+          <input
+            type="text"
+            inputMode="numeric"
+            value={rorText}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            style={{ width: '100%', maxWidth: '100px' }}
+          />
+          <input
+            type="range"
+            min={1}
+            max={20}
+            value={targetRoR}
+            onChange={(e) => {
+              const val = Number(e.target.value);
+              setTargetRoR(val);
+              setRorText(`${val}%`);
+            }}
+            style={{ width: '100%', marginTop: '0.5rem' }}
+          />
+        </div>
+
+        {/* Right: Result Card */}
+        <div
           style={{
-            display: 'block',
-            fontSize: '0.625rem',
-            fontWeight: 700,
-            textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-            marginBottom: '0.5rem',
+            padding: '1rem',
+            background: isFinite(dollars) ? riskColors.bg : 'rgba(220, 38, 38, 0.1)',
+            border: `2px solid ${isFinite(dollars) ? riskColors.border : '#dc2626'}`,
+            textAlign: 'center',
           }}
         >
-          Target Risk of Ruin
-        </label>
-        <input
-          type="text"
-          inputMode="numeric"
-          value={rorText}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          style={{ width: '80px' }}
-        />
+          <div
+            style={{
+              fontSize: '1.75rem',
+              fontWeight: 700,
+              fontFamily: 'var(--font-mono)',
+              color: isFinite(dollars) ? riskColors.text : '#dc2626',
+            }}
+          >
+            {formatDollars(dollars)}
+          </div>
+          <div style={{ fontSize: '0.875rem', opacity: 0.7, marginTop: '0.25rem' }}>
+            {isFinite(buyins) ? `${buyins} buy-ins` : 'N/A'}
+          </div>
+        </div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-        <span
-          style={{
-            fontSize: '2rem',
-            fontWeight: 700,
-            fontFamily: 'var(--font-mono)',
-          }}
-          className={isFinite(dollars) ? '' : 'text-negative'}
-        >
-          {formatDollars(dollars)}
-        </span>
-      </div>
-      <div style={{ fontSize: '0.875rem', opacity: 0.6 }}>
-        = {isFinite(buyins) ? buyins : '∞'} buy-ins
-      </div>
+
       {!isFinite(dollars) && (
-        <div style={{ fontSize: '0.75rem', color: '#dc2626', marginTop: '0.5rem' }}>
+        <div style={{ fontSize: '0.75rem', color: '#dc2626', marginTop: '0.75rem' }}>
           Requires positive winrate
         </div>
       )}
